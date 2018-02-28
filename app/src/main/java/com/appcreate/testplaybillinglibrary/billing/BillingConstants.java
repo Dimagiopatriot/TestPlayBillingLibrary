@@ -13,11 +13,12 @@ public final class BillingConstants {
 
     public static final String SKU_TEST = "test_sub";
     public static final String SKU_GOLD_TEST = "gold_test_sub";
+    public static final String SKU_SILVER_TEST = "silver_test_sub";
 
     //for items (not subscriptions)
     private static final String[] IN_APP_SKUS = {};
 
-    private static final String[] SUBSCRIPTIONS_SKUS = {SKU_TEST, SKU_GOLD_TEST};
+    private static final String[] SUBSCRIPTIONS_SKUS = {SKU_TEST, SKU_GOLD_TEST, SKU_SILVER_TEST};
 
     /**
      * Returns the list of all SKUs for the billing type specified

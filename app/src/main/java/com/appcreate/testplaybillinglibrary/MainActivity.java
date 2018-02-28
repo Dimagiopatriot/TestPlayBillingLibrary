@@ -5,6 +5,8 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -14,6 +16,8 @@ import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.appcreate.testplaybillinglibrary.adapter.CommonRecyclerViewAdapter;
+import com.appcreate.testplaybillinglibrary.adapter.SkuDetailsAdapter;
 import com.appcreate.testplaybillinglibrary.billing.BillingConstants;
 import com.appcreate.testplaybillinglibrary.billing.BillingManager;
 
@@ -26,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private MainViewController mMainViewCController;
     private BillingManager mBillingManager;
 
+    private RecyclerView mRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         mMainViewCController = new MainViewController(this);
         mBillingManager = new BillingManager(this, mMainViewCController.getUpdateListener());
+
+        mRecyclerView = findViewById(R.id.recyclerView);
     }
 
     public void onBillingManagerSetupFinished() {
@@ -64,15 +72,21 @@ public class MainActivity extends AppCompatActivity {
                         } else if (skuDetailsList != null
                                 && skuDetailsList.size() > 0) {
                             Log.e(TAG, skuDetailsList.toString());
+                            SkuDetailsAdapter adapter = new SkuDetailsAdapter();
+                            adapter.setMainViewController(mMainViewCController);
+                            setUpAdapter(adapter, skuDetailsList);
                         }
                     }
                 });
-    }
-
-    public void subscribe(View v) {
+        //mBillingManager.queryPurchases();
     }
 
     public void showUserHistory(View v) {
+
+    }
+
+    public BillingManager getBillingManager(){
+        return mBillingManager;
     }
 
     @Override
@@ -82,5 +96,12 @@ public class MainActivity extends AppCompatActivity {
             mBillingManager.destroy();
         }
         super.onDestroy();
+    }
+
+    public void setUpAdapter(CommonRecyclerViewAdapter adapter, List items) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setAdapter(adapter);
+        adapter.addItems(items);
     }
 }

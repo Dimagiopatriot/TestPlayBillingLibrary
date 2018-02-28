@@ -1,11 +1,11 @@
 package com.appcreate.testplaybillinglibrary;
 
-import android.app.Activity;
 import android.util.Log;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClient.BillingResponse;
 import com.android.billingclient.api.Purchase;
 import com.appcreate.testplaybillinglibrary.billing.BillingUpdatesListener;
-import com.android.billingclient.api.BillingClient.BillingResponse;
 
 import java.util.List;
 
@@ -27,6 +27,10 @@ public class MainViewController {
 
     public UpdateListener getUpdateListener() {
         return updateListener;
+    }
+
+    public void subscribe(String skuId){
+        mActivity.getBillingManager().purchasingItem(skuId, BillingClient.SkuType.SUBS);
     }
 
     private class UpdateListener implements BillingUpdatesListener {
@@ -52,7 +56,7 @@ public class MainViewController {
 
         @Override
         public void onPurchasesUpdated(List<Purchase> purchases) {
-
+            //mActivity.setUpAdapter();
         }
     }
 }
