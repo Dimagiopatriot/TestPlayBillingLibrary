@@ -22,6 +22,11 @@ public class SkuDetailsAdapter extends CommonRecyclerViewAdapter<SkuDetails, Sku
 
     private List<SkuDetails> skuDetailsList = new ArrayList<>();
     private MainViewController mainViewController;
+    private boolean isUserSubscribed;
+
+    public SkuDetailsAdapter(boolean isUserSubscribed){
+        this.isUserSubscribed = isUserSubscribed;
+    }
 
     @Override
     public void addItems(List<SkuDetails> skuDetailsList){
@@ -53,6 +58,9 @@ public class SkuDetailsAdapter extends CommonRecyclerViewAdapter<SkuDetails, Sku
         holder.titleTextView.setText(skuDetails.getTitle());
         holder.priceTextView.setText(skuDetails.getPrice());
         holder.descriptionTextView.setText(skuDetails.getDescription());
+        if (isUserSubscribed){
+            holder.button.setVisibility(View.GONE);
+        }
     }
 
     @Override

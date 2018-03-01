@@ -1,10 +1,9 @@
 package com.appcreate.testplaybillinglibrary;
 
 import android.app.AlertDialog;
-import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,8 +11,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.appcreate.testplaybillinglibrary.adapter.CommonRecyclerViewAdapter;
@@ -61,8 +58,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showAvailableSubscriptions(View v) {
+        getSkuDetailsListFromGoogle(BillingConstants.getSkuList(BillingClient.SkuType.SUBS), false);
+    }
+
+    public void getSkuDetailsListFromGoogle(List<String> skuIds, final boolean isUserSubscribed) {
         mBillingManager.querySkuDetailsAsync(BillingClient.SkuType.SUBS,
-                BillingConstants.getSkuList(BillingClient.SkuType.SUBS), new SkuDetailsResponseListener() {
+                skuIds, new SkuDetailsResponseListener() {
                     @Override
                     public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList) {
                         if (responseCode != BillingClient.BillingResponse.OK) {
@@ -72,20 +73,19 @@ public class MainActivity extends AppCompatActivity {
                         } else if (skuDetailsList != null
                                 && skuDetailsList.size() > 0) {
                             Log.e(TAG, skuDetailsList.toString());
-                            SkuDetailsAdapter adapter = new SkuDetailsAdapter();
+                            SkuDetailsAdapter adapter = new SkuDetailsAdapter(isUserSubscribed);
                             adapter.setMainViewController(mMainViewCController);
                             setUpAdapter(adapter, skuDetailsList);
                         }
                     }
                 });
-        //mBillingManager.queryPurchases();
     }
 
     public void showUserHistory(View v) {
-
+        mBillingManager.queryPurchases();
     }
 
-    public BillingManager getBillingManager(){
+    public BillingManager getBillingManager() {
         return mBillingManager;
     }
 

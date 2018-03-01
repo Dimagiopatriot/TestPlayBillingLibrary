@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:onClick="showUserHistory"
-        android:text="show user history" />
+        android:text="show user subs" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

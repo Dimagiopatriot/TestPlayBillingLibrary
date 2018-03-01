@@ -23,14 +23,16 @@ import java.util.List;
 
 public class BillingManager implements PurchasesUpdatedListener {
     // Default value of mBillingClientResponseCode until BillingManager was not yet initialized
-    public static final int BILLING_MANAGER_NOT_INITIALIZED  = -1;
+    public static final int BILLING_MANAGER_NOT_INITIALIZED = -1;
 
     private static final String TAG = "BillingManager";
 
     private Activity mActivity;
     private BillingUpdatesListener mBillingUpdatesListener;
 
-    /** A reference to BillingClient **/
+    /**
+     * A reference to BillingClient
+     **/
     private BillingClient mBillingClient;
 
     /**
@@ -48,7 +50,7 @@ public class BillingManager implements PurchasesUpdatedListener {
             "v7QIJQWkD1519rdMZdvDvkWuUZrxXPuvt8MLMuopsC1MpZ8MH4wUvsNtMwG9jnC22zveb39zSCllNLB1yMKTzqX" +
             "GHu+wUY+Nc+EAl6VgJXM9anyVdLlGo82PS1sGQVS/gW+RdM0P0IytpqaBUjCsbYFPKdJQC9Q+kvtqAwQ/iTUoOwIDAQAB";
 
-    public BillingManager(Activity activity, final BillingUpdatesListener billingUpdatesListener){
+    public BillingManager(Activity activity, final BillingUpdatesListener billingUpdatesListener) {
         mActivity = activity;
         mBillingUpdatesListener = billingUpdatesListener;
         mBillingClient = BillingClient.newBuilder(mActivity).setListener(this).build();
@@ -159,6 +161,7 @@ public class BillingManager implements PurchasesUpdatedListener {
      * a listener
      */
     public void queryPurchases() {
+        mPurchases.clear();
         Runnable queryToExecute = new Runnable() {
             @Override
             public void run() {
@@ -218,6 +221,7 @@ public class BillingManager implements PurchasesUpdatedListener {
      * It's recommended to move this check into your backend.
      * See {@link Security#verifyPurchase(String, String, String)}
      * </p>
+     *
      * @param purchase Purchase to be handled
      */
     private void handlePurchase(Purchase purchase) {
@@ -247,7 +251,7 @@ public class BillingManager implements PurchasesUpdatedListener {
         }
     }
 
-    public void purchasingItem(String skuId, String skuType){
+    public void purchasingItem(String skuId, String skuType) {
         BillingFlowParams flowParams = BillingFlowParams.newBuilder()
                 .setSku(skuId)
                 .setType(skuType)

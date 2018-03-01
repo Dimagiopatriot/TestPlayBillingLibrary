@@ -56,7 +56,9 @@ public class MainViewController {
 
         @Override
         public void onPurchasesUpdated(List<Purchase> purchases) {
-            //mActivity.setUpAdapter();
+            List<String> skuIds = Utils.getSkuIdsFromPurchases(purchases);
+            mActivity.getSkuDetailsListFromGoogle(skuIds, true);
+            mActivity.alert("Show user subs in list!");
         }
     }
 }
