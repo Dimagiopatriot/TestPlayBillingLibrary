@@ -70,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
                             // Handle any error responses.
                             Log.w(TAG, "Unsuccessful query for type: " + BillingClient.SkuType.SUBS
                                     + ". Error code: " + responseCode);
-                        } else if (skuDetailsList != null
-                                && skuDetailsList.size() > 0) {
+                        } else if (skuDetailsList != null) {
                             Log.e(TAG, skuDetailsList.toString());
                             SkuDetailsAdapter adapter = new SkuDetailsAdapter(isUserSubscribed);
                             adapter.setMainViewController(mMainViewCController);
